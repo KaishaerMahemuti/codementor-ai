@@ -1,7 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import lessons from '../data/lessons'; // for languages
+import frameworkLessons from '../data/frameworkLessons'; // for frameworks
 
 interface ChatUIProps {
   language: string;
+  lessonId?: number;
 }
 
 interface ChatMessage {
@@ -9,16 +12,29 @@ interface ChatMessage {
   text: string;
 }
 
-const ChatUI: React.FC<ChatUIProps> = ({ language }) => {
-  const [messages, setMessages] = useState<ChatMessage[]>([
-    {
-      sender: "ai",
-      text: `👋 Hi there! I'm your ${language.toUpperCase()} tutor. Let's get started!`,
-    },
-  ]);
-
+const ChatUI: React.FC<ChatUIProps> = ({ language, lessonId }) => {
+  const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [userInput, setUserInput] = useState("");
   const [loading, setLoading] = useState(false);
+
+  const lessonName =
+    lessons[language]?.[lessonId ?? 0] ||
+    frameworkLessons[language]?.[lessonId ?? 0] ||
+    "Introduction";
+
+  // ✅ Reset chat messages when the lesson changes
+  useEffect(() => {
+    setMessages([
+      {
+        sender: "ai",
+        text: `📘 New Lesson: ${lessonName}`,
+      },
+      {
+        sender: "ai",
+        text: `👋 I'm your ${language.toUpperCase()} tutor. Let's learn "${lessonName}".`,
+      },
+    ]);
+  }, [language, lessonId]);
 
   const sendMessage = async () => {
     if (!userInput.trim()) return;
@@ -36,6 +52,7 @@ const ChatUI: React.FC<ChatUIProps> = ({ language }) => {
       console.log("📨 Sending message to backend...");
       console.log("Message:", userMessage.text);
       console.log("Language:", language);
+      console.log("Lesson:", lessonName);
 
       const response = await fetch("http://localhost:5174/api/tutor", {
         method: "POST",
@@ -44,6 +61,7 @@ const ChatUI: React.FC<ChatUIProps> = ({ language }) => {
         },
         body: JSON.stringify({
           language,
+          lesson: lessonName,
           message: userMessage.text,
         }),
       });

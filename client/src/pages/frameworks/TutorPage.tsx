@@ -2,13 +2,12 @@ import React, { useState } from 'react';
 import { useParams } from 'react-router-dom';
 import ChatUI from '../../components/ChatUI';
 import LessonTracker from '../../components/LessonTracker';
-import lessonData from '../../data/lessons';
-import MiniCodeSandbox from '../../components/MiniCodeSandbox';
+import frameworkLessons from '../../data/frameworkLessons';
 
-const TutorPage = () => {
-  const { lang } = useParams<{ lang: string }>();
-  const language = lang?.toLowerCase() ?? '';
-  const lessons = lessonData[language] || ['Introduction'];
+const FrameworkTutorPage = () => {
+  const { framework } = useParams<{ framework: string }>();
+  const fw = framework?.toLowerCase() ?? '';
+  const lessons = frameworkLessons[fw] || ['Introduction'];
 
   const [currentLesson, setCurrentLesson] = useState(0);
 
@@ -19,14 +18,12 @@ const TutorPage = () => {
         currentLesson={currentLesson}
         onSelectLesson={(i) => setCurrentLesson(i)}
       />
-
       <div className="flex-grow-1 p-4">
-        <h2>👨‍🏫 Learning {language.toUpperCase()}</h2>
-        <ChatUI language={language} lessonId={currentLesson} />
-        <MiniCodeSandbox language={language} lessonId={currentLesson} />
+        <h2>📚 Learning {fw.toUpperCase()}</h2>
+        <ChatUI language={fw} lessonId={currentLesson} />
       </div>
     </div>
   );
 };
 
-export default TutorPage;
+export default FrameworkTutorPage;
