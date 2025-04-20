@@ -1,39 +1,30 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 
 const Sidebar: React.FC = () => {
   return (
-    <div className="bg-light border-end vh-100 p-3" style={{ width: "250px" }}>
+    <div className="bg-light border-end vh-100 p-3" style={{ width: "240px" }}>
+      <h5 className="mb-4">CodeMentor</h5>
       <ul className="nav flex-column">
         <li className="nav-item">
-          <Link className="nav-link" to="/">
-            Dashboard
-          </Link>
+          <NavLink className="nav-link" to="/" end>
+            🏠 Dashboard
+          </NavLink>
         </li>
         <li className="nav-item">
-          <Link className="nav-link" to="/languages">
-            Languages
-          </Link>
+          <NavLink className="nav-link" to="/challenges">
+            🧪 Practice Challenges
+          </NavLink>
         </li>
         <li className="nav-item">
-          <Link className="nav-link" to="/frameworks">
-            Frameworks
-          </Link>
+          <NavLink className="nav-link" to="/codelab">
+            🧠 CodeLab
+          </NavLink>
         </li>
         <li className="nav-item">
-          <Link className="nav-link" to="/challenges">
-            Practice Challenges
-          </Link>
-        </li>
-        <li className="nav-item">
-          <Link className="nav-link" to="/codelab">
-            CodeLab
-          </Link>
-        </li>
-        <li className="nav-item">
-          <Link className="nav-link" to="/mentor">
-            AI Mentor
-          </Link>
+          <NavLink className="nav-link" to="/mentor">
+            🤖 AI Mentor
+          </NavLink>
         </li>
       </ul>
     </div>

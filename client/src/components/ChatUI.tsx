@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import lessons from '../data/lessons'; // for languages
-import frameworkLessons from '../data/frameworkLessons'; // for frameworks
 
 interface ChatUIProps {
   language: string;
@@ -19,7 +18,6 @@ const ChatUI: React.FC<ChatUIProps> = ({ language, lessonId }) => {
 
   const lessonName =
     lessons[language]?.[lessonId ?? 0] ||
-    frameworkLessons[language]?.[lessonId ?? 0] ||
     "Introduction";
 
   // ✅ Reset chat messages when the lesson changes

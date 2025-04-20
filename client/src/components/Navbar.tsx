@@ -1,4 +1,5 @@
 import React from 'react';
+import { maybeCoerceBoolean } from 'openai/core';
 
 const Navbar: React.FC = () => {
   return (
